@@ -249,7 +249,7 @@ service / on new http:Listener(9090) {
         r4:Patient example = {
             id: "123",
             meta: {
-                versionId: fh.toString()
+                versionId: "fh.toString()"
             },
             implicitRules: "https://www.hl7.org/fhir",
             language: "en-US"

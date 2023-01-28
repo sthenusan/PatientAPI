@@ -244,10 +244,12 @@ service / on new http:Listener(9090) {
         r4:FHIRContext fhirContext = check r4:getFHIRContext(ctx);
         log:printDebug(fhirContext.getRequestSearchParameters().toString());
 
+        r4:FHIRSecurity fh =fhirContext.getFHIRSecurity() ?: {jwt: (), securedAPICall: false, fhirUser: ()};
+
         r4:Patient example = {
             id: "123",
             meta: {
-                versionId: "abc123"
+                versionId: fh.toString()
             },
             implicitRules: "https://www.hl7.org/fhir",
             language: "en-US"
@@ -269,7 +271,7 @@ service / on new http:Listener(9090) {
         check setPatientSearchResponse(bundle, ctx);
 
         log:printDebug("[END]FHIR interaction : search");
-        return;
+        return fh.toString();
 
     }
     // Read the current state of the resource
